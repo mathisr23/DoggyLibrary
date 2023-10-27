@@ -1,0 +1,23 @@
+{
+  "name": "doggylibrary",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mathisr23/DoggyLibrary.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mathisr23/DoggyLibrary/issues"
+  },
+  "homepage": "https://github.com/mathisr23/DoggyLibrary#readme",
+  "devDependencies": {
+    "jest": "^29.7.0"
+  }
+}
