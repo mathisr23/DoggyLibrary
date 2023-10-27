@@ -1,6 +1,6 @@
 {
   "name": "doggylibrary",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -19,5 +19,8 @@
   "homepage": "https://github.com/mathisr23/DoggyLibrary#readme",
   "devDependencies": {
     "jest": "^29.7.0"
+  },
+  "dependencies": {
+    "howler": "^2.2.4"
   }
 }
