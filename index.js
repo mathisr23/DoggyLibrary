@@ -1,8 +1,9 @@
-import { Howl } from "howler"
+//import javascript file
+import "./js/inputBark.js"
 
 // Create a Howl instance for your sound
 const sound = new Howl({
-  src: ["../assets/mp3/barkconverterino.mp3"], // Replace with the actual path
+  src: ["assets/mp3/barkconverterino.mp3"], // Replace with the actual path
 })
 
 // Get a reference to the button element
