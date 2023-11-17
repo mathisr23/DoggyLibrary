@@ -2,6 +2,46 @@ html {
   background-color: #fff;
 }
 
+#runningDog {
+  position: fixed;
+  bottom: 10px; /* Adjust as needed */
+  left: 0;
+  width: 100px; /* Adjust based on the size of your image */
+  height: auto;
+  z-index: 1000;
+}
+
+.dog {
+  width: 300px;
+  height: auto;
+}
+
+#coinContainer {
+  position: fixed;
+  bottom: 50px; /* Adjust based on the grass height */
+  left: 0;
+  width: 100%;
+  height: 30px; /* Adjust as needed */
+  z-index: 1000;
+}
+
+.coin {
+  position: absolute;
+  bottom: -10px;
+  width: 75;
+  height: 75px;
+}
+
 html {
   background-color: #fff;
+}
+
+#game {
+  text-align: center;
+  margin-top: 50px;
+}
+
+#gameStatus, #gameChoices {
+  margin-top: 20px;
+  font-size: 18px;
 }/*# sourceMappingURL=style.css.map */
