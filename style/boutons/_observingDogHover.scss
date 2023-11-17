@@ -1,0 +1,25 @@
+.observing-dog-hover-button {
+  display: flex;
+  position: relative;
+
+  &::before {
+    content: " ";
+    background-image: none;
+    position: absolute;
+    width: 60%;
+    height: 175%;
+    z-index: -1;
+    top: -100%;
+    left: 0;
+    transform: translate(-23%, -200%);
+    background-size: 100% 100%;
+    transition: top 1s;
+  }
+
+  &:hover::before {
+    background-image: url("../../doggyLibrary/assets/img/observingdoghover.png");
+    transition: top 1s;
+    top: 115%;
+    transform: translate(-23%, -143%);
+  }
+}
