@@ -26,7 +26,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // Create a toggle button
-    var toggleButton = document.createElement('button');
+    var toggleButton = document.createElement('a');
     toggleButton.id = 'toggleGameButton';
     toggleButton.innerText = 'ON/OFF';
     toggleButton.style.position = 'absolute';
@@ -40,6 +40,150 @@ document.addEventListener('DOMContentLoaded', function() {
     var coinInterval = 2000; // Time in milliseconds between new coins
     var coinCreationInterval;
     var animationFrameId;
+
+    // Coin Counter
+    var coinCount = 0;
+    var coinCounterDisplay = document.createElement('div');
+    coinCounterDisplay.id = 'coinCounterDisplay';
+    coinCounterDisplay.innerText = 'Coins: ' + coinCount;
+    document.body.appendChild(coinCounterDisplay);
+
+    // Shop Button
+    var shopButton = document.createElement('a');
+    shopButton.id = 'shopButton';
+    shopButton.innerText = 'Shop';
+    shopButton.style.position = 'absolute';
+    shopButton.style.bottom = '20%';
+    shopButton.style.left = '86px';
+    document.body.appendChild(shopButton);
+
+    // Create the shop container
+    var shopContainer = document.createElement('div');
+    shopContainer.id = 'shopContainer';
+    shopContainer.style.position = 'absolute';
+    shopContainer.style.top = '8%';
+    shopContainer.style.left = '10px';
+    shopContainer.style.backgroundColor = '#FFF';
+    shopContainer.style.padding = '10px';
+    shopContainer.style.border = '1px solid black';
+    shopContainer.style.display = 'none'; // Initially hidden
+    document.body.appendChild(shopContainer);
+      // Assume each item in shopItems now has a 'category' property
+    var shopItems = [
+        { name: 'Moonwalk Carlin Skin', cost: 10, type: 'skin', imagePath: './assets/img/carlin.gif', category: 'Skins' },
+        { name: 'Dalmatian', cost: 20, type: 'skin', imagePath: './assets/img/dalmatianSkin.gif', category: 'Skins' },
+        { name: 'Hover Animation', cost: 5, type: 'animation', className: 'hover-animation', category: 'Animations' },
+        { name: 'Coin Dropper', cost: 20, type: 'item', category: 'Items' }
+        // ... other items
+    ];
+
+    // Function to handle item purchase
+function handleItemPurchase(item) {
+    // Check if the player has enough coins to make the purchase
+    if (coinCount >= item.cost) {
+        // Deduct the cost of the item from the player's coin count
+        coinCount -= item.cost;
+        coinCounterDisplay.innerText = 'Coins: ' + coinCount;
+
+        // Handle the purchase based on the item type
+        switch (item.type) {
+            case 'skin':
+                changeDogSkin(item.imagePath);
+                break;
+            case 'animation':
+                applyAnimationToLinks(item.className);
+                break;
+            case 'item':
+                if (item.name === 'Coin Dropper') {
+                    activateCoinDropper();
+                }
+                break;
+            // ... add other cases for different item types if necessary
+        }
+        alert('You have purchased the ' + item.name + '!');
+    } else {
+        // If the player doesn't have enough coins, alert them
+        alert('You do not have enough coins to buy this item!');
+    }
+}
+
+
+  
+
+    // Function to populate the shop with categorized groups
+    function populateShop(shopContainer, shopItems) {
+        const categories = {};
+
+        // Group items by category
+        shopItems.forEach(function(item) {
+            if (!categories[item.category]) {
+                categories[item.category] = [];
+            }
+            categories[item.category].push(item);
+        });
+
+        // Create sections for each category
+        Object.keys(categories).forEach(function(category) {
+            var categoryDiv = document.createElement('div');
+            categoryDiv.className = 'shop-category';
+            var categoryTitle = document.createElement('h3');
+            categoryTitle.innerText = category;
+            categoryDiv.appendChild(categoryTitle);
+
+            categories[category].forEach(function(item) {
+                var itemElement = document.createElement('div');
+                itemElement.className = 'shop-item';
+                itemElement.innerText = item.name + ' - ' + item.cost + ' Coins';
+                var buyButton = document.createElement('button');
+                buyButton.innerText = 'Buy';
+                buyButton.onclick = function() {
+                    // Call handleItemPurchase when the button is clicked
+                    handleItemPurchase(item);
+                };
+                itemElement.appendChild(buyButton);
+                categoryDiv.appendChild(itemElement);
+            });
+
+            shopContainer.appendChild(categoryDiv);
+        });
+    }
+
+
+    
+
+    // Function to activate the Coin Dropper
+    function activateCoinDropper() {
+        setInterval(function() {
+            createDroppingCoin();
+        }, 5000); // Drop a coin every 5000 milliseconds (5 seconds)
+    }
+
+    // Function to create a dropping coin
+    function createDroppingCoin() {
+        var droppingCoin = document.createElement('img');
+        droppingCoin.className = 'dropping-coin';
+        droppingCoin.src = './assets/img/coin.gif'; // Replace with your coin image path
+        droppingCoin.style.position = 'absolute';
+        droppingCoin.style.left = Math.random() * (window.innerWidth - 20) + 'px';
+        droppingCoin.style.top = '0px';
+        document.body.appendChild(droppingCoin);
+
+        var dropInterval = setInterval(function() {
+            var topPosition = parseInt(droppingCoin.style.top);
+            topPosition += 5; // Adjust this value for drop speed
+            droppingCoin.style.top = topPosition + 'px';
+
+            if (topPosition > window.innerHeight) {
+                document.body.removeChild(droppingCoin);
+                clearInterval(dropInterval);
+            }
+        }, 50); // Adjust this value for drop animation speed
+    }
+
+    // Shop Button Toggle Functionality
+    shopButton.onclick = function() {
+        shopContainer.style.display = shopContainer.style.display === 'none' ? 'block' : 'none';
+    };
 
     function moveDog() {
         if (!gameVisible) {
@@ -95,17 +239,75 @@ document.addEventListener('DOMContentLoaded', function() {
         coinContainer.appendChild(coin);
     }
 
-    // Function to check for collisions between the dog and coins
     function checkCoinCollision() {
         var coins = document.querySelectorAll('.coin');
         coins.forEach(function(coin) {
             if (isColliding(dog, coin)) {
-                coinContainer.removeChild(coin);
+                // Ensure the coin is in the coinContainer before attempting to remove it
+                if (coinContainer.contains(coin)) {
+                    coinContainer.removeChild(coin);
+                } else {
+                    // If the coin is not in the container, remove it directly from the body
+                    document.body.removeChild(coin);
+                }
                 coinSound.play();
+                coinCount++;
+                coinCounterDisplay.innerText = 'Coins: ' + coinCount;
             }
         });
     }
+    
 
+    // Function to Change Dog's Skin
+    function changeDogSkin(skinImagePath) {
+        dog.src = skinImagePath;
+    }
+    // Function to Apply Animation to Links
+    function applyAnimationToLinks(className) {
+        document.querySelectorAll('a:not(header a):not(footer a)').forEach(function(link) {
+            link.classList.add(className);
+        });
+    }
+
+    // Function to activate the Coin Dropper
+    function activateCoinDropper() {
+        setInterval(function() {
+            createDroppingCoin();
+        }, 3000); // Drop a coin every 5000 milliseconds (5 seconds)
+    }
+
+    // Function to create a dropping coin
+function createDroppingCoin() {
+    var droppingCoin = document.createElement('img');
+    droppingCoin.className = 'coin'; // Add 'coin' class immediately for uniformity
+    droppingCoin.src = './assets/img/coin.gif'; // Replace with your coin image path
+    droppingCoin.style.position = 'absolute';
+    droppingCoin.style.left = Math.random() * (window.innerWidth - 30) + 'px';
+    droppingCoin.style.top = '0px';
+    document.body.appendChild(droppingCoin);
+
+    var dropInterval = setInterval(function() {
+        var topPosition = parseInt(droppingCoin.style.top);
+        topPosition += 10; // Adjust this value for drop speed
+
+        var groundLevel = window.innerHeight - 115; // Adjust this value to match the default coin ground level
+
+        if (topPosition < groundLevel) {
+            droppingCoin.style.top = topPosition + 'px';
+        } else {
+            droppingCoin.style.top = groundLevel + 'px'; // Place the coin on the ground
+            clearInterval(dropInterval);
+        }
+    }, 50); // Adjust this value for drop animation speed
+}
+
+
+
+
+    // Shop Button Toggle Functionality
+    shopButton.onclick = function() {
+        shopContainer.style.display = shopContainer.style.display === 'none' ? 'block' : 'none';
+    };
     // Collision detection function
     function isColliding(a, b) {
         var aRect = a.getBoundingClientRect();
@@ -128,6 +330,8 @@ document.addEventListener('DOMContentLoaded', function() {
             dog.style.transform = 'scaleX(-1)';
         }
     });
+    // Populate the shop once you've defined your items and categories
+    populateShop(shopContainer, shopItems);
 
     // Start the game initially
     startGame();

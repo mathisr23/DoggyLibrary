@@ -1,0 +1,14 @@
+a {
+    text-decoration: none; // Removes the underline from links
+    color: #007bff; // Sets the default link color
+    font-weight: bold; // Makes the text bold
+
+    &:hover, &:focus {
+        color: #0056b3; // Changes color on hover and focus
+        text-decoration: underline; // Adds underline on hover and focus
+    }
+
+    &:active {
+        color: #004085; // Changes color when the link is clicked (active)
+    }
+}

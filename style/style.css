@@ -2,6 +2,11 @@ html {
   background-color: #fff;
 }
 
+.hover-animation:hover {
+  transform: scale(1.1);
+  transition: transform 0.3s ease;
+}
+
 #runningDog {
   position: fixed;
   bottom: 10px; /* Adjust as needed */
@@ -36,6 +41,19 @@ html {
   background-color: #fff;
 }
 
+a {
+  text-decoration: none;
+  color: #007bff;
+  font-weight: bold;
+}
+a:hover, a:focus {
+  color: #0056b3;
+  text-decoration: underline;
+}
+a:active {
+  color: #004085;
+}
+
 #game {
   text-align: center;
   margin-top: 50px;
@@ -44,4 +62,56 @@ html {
 #gameStatus, #gameChoices {
   margin-top: 20px;
   font-size: 18px;
+}
+
+#shopContainer {
+  /* Style for the shop container */
+  font-family: Arial, sans-serif;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  max-width: 300px;
+  padding: 20px;
+}
+
+.shop-category {
+  /* Style for each category section */
+  margin-bottom: 20px;
+}
+
+.shop-category h3 {
+  /* Style for the category title */
+  color: #333;
+  border-bottom: 2px solid #eee;
+  padding-bottom: 5px;
+  margin-bottom: 10px;
+}
+
+.shop-item {
+  /* Style for each shop item */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+  background-color: #f9f9f9;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+button {
+  /* Style for all buttons */
+  background-color: #008CBA;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  transition-duration: 0.4s;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+button:hover {
+  background-color: #005f73;
 }/*# sourceMappingURL=style.css.map */
