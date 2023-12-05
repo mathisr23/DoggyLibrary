@@ -1,5 +1,6 @@
 //import javascript file
 import "./js/inputBark.js"
+import "./js/validationDogInput.js"
 
 // Create a Howl instance for your sound
 const sound = new Howl({

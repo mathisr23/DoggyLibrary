@@ -28,4 +28,30 @@ html {
   transition: top 1s;
   top: 115%;
   transform: translate(-23%, -143%);
+}
+
+.validationDog {
+  display: flex;
+  flex-direction: column;
+  max-width: 300px;
+  margin: 50px auto;
+}
+.validationDog label {
+  margin-bottom: 5px;
+}
+.validationDog input {
+  padding: 5px;
+  margin-bottom: 10px;
+}
+.validationDog .error-message {
+  color: red;
+  margin-top: 5px;
+}
+.validationDog .hidden {
+  display: none;
+}
+
+* {
+  margin: 0;
+  padding: 0;
 }/*# sourceMappingURL=style.css.map */
