@@ -34,8 +34,8 @@ html {
 .coin {
   position: absolute;
   bottom: -10px;
-  width: 75;
-  height: 75px;
+  width: 40;
+  height: 40px;
 }
 
 #⁠dogChangeWp {
@@ -231,14 +231,6 @@ button:hover {
 /* For Webkit (Chrome, Safari, including macOS) */
 ::-webkit-scrollbar {
   width: 40px; /* Width of the scrollbar - adjust as needed */
-}
-
-::-webkit-scrollbar-thumb {
-  background: url("/doggylibrary/assets/img/dog.png") no-repeat center center;
-  border-radius: 8px; /* Rounded corners on the scrollbar thumb */
-  background-size: cover; /* Cover will make sure the entire scrollbar is filled */
-  border: 4px solid transparent; /* Makes sure the image doesn't get cut off */
-  background-clip: padding-box; /* Makes sure the border transparent border is considered for the background */
 }
 
 /* Optional: scrollbar track */
