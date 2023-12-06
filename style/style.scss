@@ -1,5 +1,11 @@
 @import "./animations/animation";
+@import "./animations/running";
+
 @import "./boutons/animation";
 @import "./boutons/observingDogHover";
 @import "./form/_validationDogInput";
 @import "./common/main";
+
+@import "./game/game";
+@import "./game/shop";
+@import "./game/scrollbar";
