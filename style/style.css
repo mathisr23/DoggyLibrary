@@ -1,3 +1,4 @@
+@charset "UTF-8";
 html {
   background-color: #fff;
 }
@@ -37,6 +38,44 @@ html {
   height: 75px;
 }
 
+#⁠dogChangeWp {
+  margin-top: 100px;
+  background-color: #3498db;
+  border: none;
+  padding: 10px 20px;
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  cursor: pointer;
+}
+
+.loader-container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.loader-container .loader-image {
+  width: 100px; /* Ajustez la taille de l'image selon vos besoins */
+  height: 100px;
+  z-index: 1;
+}
+.loader-container .loader-circle {
+  position: absolute;
+  width: 120px; /* Ajustez la taille du cercle selon vos besoins */
+  height: 120px;
+  border: 10px solid transparent;
+  border-top: 10px solid #ffdeb5; /* Couleur de la bordure du cercle */
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 html {
   background-color: #fff;
 }
@@ -65,6 +104,47 @@ html {
   transform: translate(-23%, -143%);
 }
 
+#⁠dogButton {
+  background-color: #3498db;
+  border: none;
+  padding: 10px 20px;
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  cursor: pointer;
+}
+#⁠dogButton:hover {
+  background-color: red;
+}
+#⁠dogButton img {
+  width: 30px;
+  height: 30px;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  margin: 0;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+a {
+  text-decoration: none;
+  color: #007bff;
+  font-weight: bold;
+}
+a:hover, a:focus {
+  color: #0056b3;
+  text-decoration: underline;
+}
+a:active {
+  color: #004085;
+}
+
 .validationDog {
   display: flex;
   flex-direction: column;
@@ -84,24 +164,6 @@ html {
 }
 .validationDog .hidden {
   display: none;
-}
-
-* {
-  margin: 0;
-  padding: 0;
-}
-
-a {
-  text-decoration: none;
-  color: #007bff;
-  font-weight: bold;
-}
-a:hover, a:focus {
-  color: #0056b3;
-  text-decoration: underline;
-}
-a:active {
-  color: #004085;
 }
 
 #game {

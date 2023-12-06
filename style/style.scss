@@ -1,11 +1,21 @@
+// Animations
 @import "./animations/animation";
 @import "./animations/running";
+@import "./animations/dogChangeWp";
+@import "./animations/dogLoader";
 
+// Buttons
 @import "./boutons/animation";
 @import "./boutons/observingDogHover";
-@import "./form/_validationDogInput";
+@import "./boutons/dogButton";
+
+// Common
 @import "./common/main";
 
+// form
+@import "./form/_validationDogInput";
+
+//Game
 @import "./game/game";
 @import "./game/shop";
 @import "./game/scrollbar";

@@ -1,0 +1,30 @@
+.loader-container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  //   height: 100vh;
+
+  .loader-image {
+    width: 100px; /* Ajustez la taille de l'image selon vos besoins */
+    height: 100px;
+    z-index: 1;
+  }
+
+  .loader-circle {
+    position: absolute;
+    width: 120px; /* Ajustez la taille du cercle selon vos besoins */
+    height: 120px;
+    border: 10px solid transparent;
+    border-top: 10px solid #ffdeb5; /* Couleur de la bordure du cercle */
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+  }
+
+  @keyframes spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+}

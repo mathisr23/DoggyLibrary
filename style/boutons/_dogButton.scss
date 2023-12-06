@@ -1,0 +1,18 @@
+#⁠dogButton {
+  background-color: #3498db;
+  border: none;
+  padding: 10px 20px;
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: red;
+  }
+
+  img {
+    width: 30px;
+    height: 30px;
+  }
+}

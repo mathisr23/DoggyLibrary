@@ -5,6 +5,8 @@ const smallBark = new Howl({
 
 const inputText = document.querySelector(".input-text-bark")
 
-inputText.addEventListener("input", () => {
-  smallBark.play()
-})
+if (inputText) {
+  inputText.addEventListener("input", () => {
+    smallBark.play()
+  })
+}

@@ -7,7 +7,9 @@ const sound = new Howl({
 const playSoundButton = document.getElementById("playSoundButton")
 
 // Add a click event listener to the button
-playSoundButton.addEventListener("click", () => {
-  // Play the sound when the button is clicked
-  sound.play()
-})
+if (playSoundButton) {
+  playSoundButton.addEventListener("click", () => {
+    // Play the sound when the button is clicked
+    sound.play()
+  })
+}
