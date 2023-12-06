@@ -90,12 +90,33 @@ document.addEventListener('DOMContentLoaded', function() {
       // Assume each item in shopItems now has a 'category' property
     var shopItems = [
         { name: 'Moonwalk Carlin Skin', cost: 10, type: 'skin', imagePath: './assets/img/carlin.gif', category: 'Skins' },
-        { name: 'Dalmatian', cost: 20, type: 'skin', imagePath: './assets/img/dalmatianSkin.gif', category: 'Skins' },
+        { name: 'Barry Skin', cost: 20, type: 'skin', imagePath: './assets/img/barry.gif', category: 'Skins' },
+        { name: 'Paper Dog Skin', cost: 20, type: 'skin', imagePath: './assets/img/paper-dog.gif', category: 'Skins' },
         { name: 'Hover Animation', cost: 5, type: 'animation', className: 'hover-animation', category: 'Animations' },
         { name: 'Coin Dropper', cost: 20, type: 'item', category: 'Items' },
-        { name: 'Strange Bark', cost: 10, type: 'sound', soundPath: './assets/mp3/bark-guez.mp3', category: 'Sounds' }
+        { name: 'Strange Bark', cost: 10, type: 'sound', soundPath: './assets/mp3/bark-guez.mp3', category: 'Sounds' },
+        { name: 'Custom Scrollbar', cost: 5, type: 'scrollbar', imagePath: './assets/img/dog-scroll.png', category: 'Customizations' },
+        { name: 'Custom Scrollbar 2', cost: 5, type: 'scrollbar', imagePath: './assets/img/scroll2.png', category: 'Customizations' },
+        { name: 'Magic Cursor', cost: 5, type: 'cursor', cursorPath: 'url(./assets/img/cursorhead.png) 32 32, auto', category: 'Cursors' }
+
         // ... other items
     ];
+    
+    function addCursorStyle(cursorPath) {
+        // Create a new style element
+        const styleSheet = document.createElement("style");
+        styleSheet.type = "text/css";
+        // Set the innerText with the cursor path, ensuring the syntax is correct for CSS
+        styleSheet.innerText = `body { cursor: ${cursorPath}; }`;
+        // Append the style element to the head of the document
+        document.body.style.cursor = cursorPath;
+    }
+    
+    function changeCursor(cursorPath) {
+        // For macOS, ensure the image size is 32x32 pixels or less
+        // cursorPath should be a URL to the cursor image, ending with .cur or .png
+        document.body.style.cursor = cursorPath;
+    }
 
     // Function to handle item purchase
 function handleItemPurchase(item) {
@@ -116,6 +137,15 @@ function handleItemPurchase(item) {
             case 'animation':
                 applyAnimationToLinks(item.className);
                 break;
+            case 'scrollbar':
+                changeScrollbar(item.imagePath);
+                break;
+            case 'cursor':
+                if (item.type === 'cursor') {
+                    // Here, cursorPath should be something like 'url(./assets/img/cursorhead.png), auto'
+                    addCursorStyle(item.cursorPath);
+                }
+                break;
             case 'item':
                 if (item.name === 'Coin Dropper') {
                     activateCoinDropper();
@@ -131,12 +161,62 @@ function handleItemPurchase(item) {
 }
 
 
-  // Function to change the coin sound
-    function changeCoinSound(soundPath) {
-        var coinSound = document.getElementById('coinSound');
-        if (coinSound) {
-            coinSound.src = soundPath;
+    
+
+
+    // Function to change the scrollbar
+    function changeScrollbar(imagePath) {
+        // Update the scrollbar thumb style
+        var styleSheet = document.createElement("style")
+        styleSheet.innerText = `
+            ::-webkit-scrollbar-thumb {
+                background: url('${imagePath}') no-repeat center center;
+                border-radius: 8px; /* Rounded corners on the scrollbar thumb */
+                background-size: contain; /* Cover will make sure the entire scrollbar is filled */
+                border: 4px solid transparent; /* Makes sure the image doesn't get cut off */
+                background-clip: padding-box; /* Makes sure the border transparent border is considered for the background */
+            }
+        `;
+        document.head.appendChild(styleSheet);
+    }
+
+    function changeCursor(cursorPath) {
+        // Set the cursor style for the body
+        document.body.style.cursor = cursorPath; // This will directly change the cursor
+    }
+
+    // Function to create a preview element
+    function createPreviewElement(item) {
+        // Remove existing preview if it exists
+        var existingPreview = document.getElementById('preview');
+        if (existingPreview) {
+            existingPreview.remove();
         }
+
+        // Create a new preview container
+        var preview = document.createElement('div');
+        preview.id = 'preview';
+        preview.style.position = 'fixed';
+        preview.style.bottom = '60%';
+        preview.style.left = '400px';
+        preview.style.border = '1px solid black';
+        preview.style.padding = '10px';
+        preview.style.backgroundColor = 'white';
+
+        // Add the item image to the preview
+        if (item.imagePath) {
+            var image = document.createElement('img');
+            image.src = item.imagePath;
+            image.style.width = '100px'; // Set the size of the preview image
+            preview.appendChild(image);
+        }
+
+        // Optionally, add the item name or other details to the preview
+        var name = document.createElement('p');
+        name.innerText = item.name;
+        preview.appendChild(name);
+
+        document.body.appendChild(preview);
     }
 
     // Function to populate the shop with categorized groups
@@ -159,16 +239,31 @@ function handleItemPurchase(item) {
             categoryTitle.innerText = category;
             categoryDiv.appendChild(categoryTitle);
 
+             // For each item, add an event listener to show the preview
             categories[category].forEach(function(item) {
                 var itemElement = document.createElement('div');
                 itemElement.className = 'shop-item';
                 itemElement.innerText = item.name + ' - ' + item.cost + ' Coins';
+
                 var buyButton = document.createElement('button');
                 buyButton.innerText = 'Buy';
                 buyButton.onclick = function() {
-                    // Call handleItemPurchase when the button is clicked
                     handleItemPurchase(item);
                 };
+
+                // Event listener to show preview on mouseover
+                itemElement.onmouseover = function() {
+                    createPreviewElement(item);
+                };
+
+                // Optionally, hide preview on mouseout
+                itemElement.onmouseout = function() {
+                    var preview = document.getElementById('preview');
+                    if (preview) {
+                        preview.remove();
+                    }
+                };
+
                 itemElement.appendChild(buyButton);
                 categoryDiv.appendChild(itemElement);
             });
@@ -281,9 +376,29 @@ function handleItemPurchase(item) {
                 }
                 coinSound.play();
                 coinCount++;
-                coinCounterDisplay.innerText = 'Coins: ' + coinCount;
+                updateCoinCounterDisplay(coinCount); // Update the display with a new function
             }
         });
+    }
+    
+    // Function to update the coin counter display with a GIF
+    function updateCoinCounterDisplay(count) {
+        // Clear the current contents of the coin counter display
+        coinCounterDisplay.innerHTML = '';
+      
+        // Create an image element for the coin GIF
+        var coinImage = document.createElement('img');
+        coinImage.src = './assets/img/bone.gif'; // Replace with the path to your coin GIF
+        coinImage.style.width = '30px'; // Set this to the desired size of your coin GIF
+        coinImage.style.height = 'auto';
+        coinImage.style.verticalAlign = 'middle'; // Align the image with the text
+      
+        // Append the coin GIF to the coin counter display
+        coinCounterDisplay.appendChild(coinImage);
+      
+        // Create a text node for the coin count and append it
+        var coinCountText = document.createTextNode(' ' + count);
+        coinCounterDisplay.appendChild(coinCountText);
     }
     
 
