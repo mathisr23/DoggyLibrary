@@ -45,8 +45,20 @@ document.addEventListener('DOMContentLoaded', function() {
     var coinCount = 0;
     var coinCounterDisplay = document.createElement('div');
     coinCounterDisplay.id = 'coinCounterDisplay';
-    coinCounterDisplay.innerText = 'Coins: ' + coinCount;
+
+    // Create an image element for the coin GIF
+    var coinImage = document.createElement('img');
+    coinImage.src = './assets/img/bone.gif'; // Replace with the path to your coin GIF
+    coinImage.style.width = '30px'; // Set this to the desired size of your coin GIF
+    coinImage.style.height = 'auto';
+    coinImage.style.verticalAlign = 'middle'; // Align the image with the text
+
+    // Add the coin GIF and the coin count to the coin counter display
+    coinCounterDisplay.appendChild(coinImage);
+    coinCounterDisplay.innerHTML += ' ' + coinCount; // Add a space before the coin count for separation
+
     document.body.appendChild(coinCounterDisplay);
+
 
     // Shop Button
     var shopButton = document.createElement('a');
@@ -60,6 +72,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Create the shop container
     var shopContainer = document.createElement('div');
     shopContainer.id = 'shopContainer';
+    // Existing style setup
     shopContainer.style.position = 'absolute';
     shopContainer.style.top = '8%';
     shopContainer.style.left = '10px';
@@ -67,13 +80,20 @@ document.addEventListener('DOMContentLoaded', function() {
     shopContainer.style.padding = '10px';
     shopContainer.style.border = '1px solid black';
     shopContainer.style.display = 'none'; // Initially hidden
+
+    // Additional styles for scrollable functionality
+    shopContainer.style.width = '300px'; // Set a fixed width or use a percentage
+    shopContainer.style.maxHeight = '400px'; // Set a max height to enable scrolling
+    shopContainer.style.overflowY = 'scroll'; // Enable vertical scrolling
+
     document.body.appendChild(shopContainer);
       // Assume each item in shopItems now has a 'category' property
     var shopItems = [
         { name: 'Moonwalk Carlin Skin', cost: 10, type: 'skin', imagePath: './assets/img/carlin.gif', category: 'Skins' },
         { name: 'Dalmatian', cost: 20, type: 'skin', imagePath: './assets/img/dalmatianSkin.gif', category: 'Skins' },
         { name: 'Hover Animation', cost: 5, type: 'animation', className: 'hover-animation', category: 'Animations' },
-        { name: 'Coin Dropper', cost: 20, type: 'item', category: 'Items' }
+        { name: 'Coin Dropper', cost: 20, type: 'item', category: 'Items' },
+        { name: 'Strange Bark', cost: 10, type: 'sound', soundPath: './assets/mp3/bark-guez.mp3', category: 'Sounds' }
         // ... other items
     ];
 
@@ -89,6 +109,9 @@ function handleItemPurchase(item) {
         switch (item.type) {
             case 'skin':
                 changeDogSkin(item.imagePath);
+                break;
+            case 'sound':
+                changeCoinSound(item.soundPath);
                 break;
             case 'animation':
                 applyAnimationToLinks(item.className);
@@ -108,7 +131,13 @@ function handleItemPurchase(item) {
 }
 
 
-  
+  // Function to change the coin sound
+    function changeCoinSound(soundPath) {
+        var coinSound = document.getElementById('coinSound');
+        if (coinSound) {
+            coinSound.src = soundPath;
+        }
+    }
 
     // Function to populate the shop with categorized groups
     function populateShop(shopContainer, shopItems) {
@@ -162,7 +191,7 @@ function handleItemPurchase(item) {
     function createDroppingCoin() {
         var droppingCoin = document.createElement('img');
         droppingCoin.className = 'dropping-coin';
-        droppingCoin.src = './assets/img/coin.gif'; // Replace with your coin image path
+        droppingCoin.src = './assets/img/bone.gif'; // Replace with your coin image path
         droppingCoin.style.position = 'absolute';
         droppingCoin.style.left = Math.random() * (window.innerWidth - 20) + 'px';
         droppingCoin.style.top = '0px';
@@ -234,7 +263,7 @@ function handleItemPurchase(item) {
     function createCoin() {
         var coin = document.createElement('img');
         coin.className = 'coin';
-        coin.src = './assets/img/coin.gif'; // Replace with your coin image path
+        coin.src = './assets/img/bone.gif'; // Replace with your coin image path
         coin.style.left = Math.random() * (window.innerWidth - 20) + 'px';
         coinContainer.appendChild(coin);
     }
@@ -280,7 +309,7 @@ function handleItemPurchase(item) {
 function createDroppingCoin() {
     var droppingCoin = document.createElement('img');
     droppingCoin.className = 'coin'; // Add 'coin' class immediately for uniformity
-    droppingCoin.src = './assets/img/coin.gif'; // Replace with your coin image path
+    droppingCoin.src = './assets/img/bone.gif'; // Replace with your coin image path
     droppingCoin.style.position = 'absolute';
     droppingCoin.style.left = Math.random() * (window.innerWidth - 30) + 'px';
     droppingCoin.style.top = '0px';

@@ -33,8 +33,8 @@ html {
 .coin {
   position: absolute;
   bottom: -10px;
-  width: 75;
-  height: 75px;
+  width: 40px;
+  height: 40px;
 }
 
 html {
@@ -62,6 +62,57 @@ a:active {
 #gameStatus, #gameChoices {
   margin-top: 20px;
   font-size: 18px;
+}
+
+#shopButton {
+  display: inline-block;
+  padding: 11px 18px;
+  font-size: 20px;
+  margin-left: 70px;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  outline: none;
+  color: #fff;
+  background-color: #04AA6D;
+  border: none;
+  border-radius: 15px;
+  box-shadow: 0 9px #999;
+}
+
+#shopButton:hover {
+  background-color: #3e8e41;
+}
+
+#shopButton:active {
+  background-color: #3e8e41;
+  box-shadow: 0 5px #666;
+  transform: translateY(4px);
+}
+
+#toggleGameButton {
+  display: inline-block;
+  padding: 11px 18px;
+  font-size: 20px;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  outline: none;
+  color: #fff;
+  background-color: #04AA6D;
+  border: none;
+  border-radius: 15px;
+  box-shadow: 0 9px #999;
+}
+
+#toggleGameButton:hover {
+  background-color: #3e8e41;
+}
+
+#toggleGameButton:active {
+  background-color: #3e8e41;
+  box-shadow: 0 5px #666;
+  transform: translateY(4px);
 }
 
 #shopContainer {
@@ -137,4 +188,8 @@ button:hover {
 /* Optional: scrollbar thumb on hover */
 ::-webkit-scrollbar-thumb:hover {
   background-color: #b3b3b3; /* Color when hovering over the scrollbar thumb */
+}
+
+html {
+  overflow-y: scroll; /* This will force the vertical scrollbar to be visible */
 }/*# sourceMappingURL=style.css.map */
