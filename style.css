@@ -1,73 +1,71 @@
+@charset "UTF-8";
 body {
-    margin: 0;
-    overflow: hidden;
-    background-size: cover;
-    background-repeat: no-repeat;
+  margin: 0;
+  overflow: hidden;
+  background-size: cover;
+  background-repeat: no-repeat;
 }
-
 
 /* 1 */
-
-#dogButton {
-    background-color: #3498db;
-    border: none;
-    padding: 10px 20px;
-    position: absolute;
-    top: 10px;
-    left: 10px;
-    cursor: pointer;
+#⁠dogButton {
+  background-color: #3498db;
+  border: none;
+  padding: 10px 20px;
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  cursor: pointer;
 }
-
-#dogButton:hover {
-    background-color: red;
+#⁠dogButton:hover {
+  background-color: red;
 }
-
-#dogButton img {
-    width: 30px;
-    height: 30px;
+#⁠dogButton img {
+  width: 30px;
+  height: 30px;
 }
 
 /* 2 */
-
-#dogChangeWp {
-    margin-top: 100px;
-    background-color: #3498db;
-    border: none;
-    padding: 10px 20px;
-    position: absolute;
-    top: 10px;
-    left: 10px;
-    cursor: pointer;
+#⁠dogChangeWp {
+  margin-top: 100px;
+  background-color: #3498db;
+  border: none;
+  padding: 10px 20px;
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  cursor: pointer;
 }
 
 /* 3 */
 .loader-container {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
 }
-
-.loader-image {
-    width: 100px; /* Ajustez la taille de l'image selon vos besoins */
-    height: 100px;
-    z-index: 1;
+.loader-container .loader-image {
+  width: 100px;
+  /* Ajustez la taille de l'image selon vos besoins */
+  height: 100px;
+  z-index: 1;
 }
-
-.loader-circle {
-    position: absolute;
-    width: 120px; /* Ajustez la taille du cercle selon vos besoins */
-    height: 120px;
-    border: 10px solid transparent;
-    border-top: 10px solid #FFDEB5; /* Couleur de la bordure du cercle */
-    border-radius: 50%;
-    animation: spin 1s linear infinite;
+.loader-container .loader-circle {
+  position: absolute;
+  width: 120px;
+  /* Ajustez la taille du cercle selon vos besoins */
+  height: 120px;
+  border: 10px solid transparent;
+  border-top: 10px solid #FFDEB5;
+  /* Couleur de la bordure du cercle */
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
 }
-
 @keyframes spin {
-    to {
-        transform: rotate(360deg);
-    }
+  to {
+    transform: rotate(360deg);
+  }
 }
+
+/*# sourceMappingURL=style.css.map */
