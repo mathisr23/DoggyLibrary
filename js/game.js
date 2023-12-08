@@ -89,15 +89,16 @@ document.addEventListener('DOMContentLoaded', function() {
   document.body.appendChild(shopContainer);
     // Assume each item in shopItems now has a 'category' property
   var shopItems = [
-      { name: 'Moonwalk Carlin Skin', cost: 10, type: 'skin', imagePath: './assets/img/carlin.gif', category: 'Skins' },
-      { name: 'Barry Skin', cost: 20, type: 'skin', imagePath: './assets/img/barry.gif', category: 'Skins' },
-      { name: 'Paper Dog Skin', cost: 20, type: 'skin', imagePath: './assets/img/paper-dog.gif', category: 'Skins' },
+      { name: 'Barry Skin', cost: 10, type: 'skin', imagePath: './assets/img/barry.gif', category: 'Skins', speed : 5 },
+      { name: 'Paper Dog Skin', cost: 30, type: 'skin', imagePath: './assets/img/paper-dog.gif', category: 'Skins', speed : 10 },
+      { name: 'Moonwalk Carlin Skin', cost: 50, type: 'skin', imagePath: './assets/img/carlin.gif', category: 'Skins', speed : 15 },
       { name: 'Hover Animation', cost: 5, type: 'animation', className: 'hover-animation', category: 'Animations' },
       { name: 'Coin Dropper', cost: 20, type: 'item', category: 'Items' },
       { name: 'Strange Bark', cost: 10, type: 'sound', soundPath: './assets/mp3/bark-guez.mp3', category: 'Sounds' },
       { name: 'Custom Scrollbar', cost: 5, type: 'scrollbar', imagePath: './assets/img/dog-scroll.png', category: 'Customizations' },
       { name: 'Custom Scrollbar 2', cost: 5, type: 'scrollbar', imagePath: './assets/img/scroll2.png', category: 'Customizations' },
-      { name: 'Magic Cursor', cost: 5, type: 'cursor', cursorPath: 'url(./assets/img/cursorhead.png) 32 32, auto', category: 'Cursors' }
+      { name: 'Magic Cursor', cost: 5, type: 'cursor', cursorPath: 'url(./assets/img/cursorhead.png) 32 32, auto', category: 'Cursors' },
+      { name: 'Random Dog Word', cost: 5, type: 'function', functionName: 'generateRandomWordShopItem', category: 'Functions' },
 
       // ... other items
   ];
@@ -127,30 +128,37 @@ function handleItemPurchase(item) {
       coinCounterDisplay.innerText = 'Coins: ' + coinCount;
 
       // Handle the purchase based on the item type
-      switch (item.type) {
-          case 'skin':
-              changeDogSkin(item.imagePath);
-              break;
-          case 'sound':
-              changeCoinSound(item.soundPath);
-              break;
-          case 'animation':
-              applyAnimationToLinks(item.className);
-              break;
-          case 'scrollbar':
-              changeScrollbar(item.imagePath);
-              break;
-          case 'cursor':
-              if (item.type === 'cursor') {
-                  // Here, cursorPath should be something like 'url(./assets/img/cursorhead.png), auto'
-                  addCursorStyle(item.cursorPath);
-              }
-              break;
-          case 'item':
-              if (item.name === 'Coin Dropper') {
-                  activateCoinDropper();
-              }
-              break;
+        switch (item.type) {
+            case 'skin':
+                changeDogSkin(item);
+                break;
+            case 'sound':
+                changeCoinSound(item.soundPath);
+                break;
+            case 'animation':
+                applyAnimationToLinks(item.className);
+                break;
+            case 'scrollbar':
+                changeScrollbar(item.imagePath);
+                break;
+            case 'cursor':
+                if (item.type === 'cursor') {
+                    // Here, cursorPath should be something like 'url(./assets/img/cursorhead.png), auto'
+                    addCursorStyle(item.cursorPath);
+                }
+                break;
+            case 'item':
+                if (item.name === 'Coin Dropper') {
+                    activateCoinDropper();
+                }
+                break;
+            case 'function':
+                if (window[item.functionName]) {
+                    window[item.functionName](); // Call the global function
+                } else {
+                    console.error('Function not found:', item.functionName);
+                }
+                break;
           // ... add other cases for different item types if necessary
       }
       alert('You have purchased the ' + item.name + '!');
@@ -402,10 +410,12 @@ function handleItemPurchase(item) {
   }
   
 
-  // Function to Change Dog's Skin
-  function changeDogSkin(skinImagePath) {
-      dog.src = skinImagePath;
+  // Function to change dog's skin and speed
+  function changeDogSkin(skin) {
+    dog.src = skin.imagePath;
+    speed = skin.speed; // Update the speed global variable
   }
+
   // Function to Apply Animation to Links
   function applyAnimationToLinks(className) {
       document.querySelectorAll('a:not(header a):not(footer a)').forEach(function(link) {
