@@ -98,7 +98,7 @@ html {
   transition: top 1s;
 }
 .observing-dog-hover-button:hover::before {
-  background-image: url("../../doggyLibrary/assets/img/observingdoghover.png");
+  background-image: url("../../assets/img/observingdoghover.png");
   transition: top 1s;
   top: 115%;
   transform: translate(-23%, -143%);
