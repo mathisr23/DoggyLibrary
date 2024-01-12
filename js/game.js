@@ -89,35 +89,39 @@ document.addEventListener('DOMContentLoaded', function() {
   document.body.appendChild(shopContainer);
     // Assume each item in shopItems now has a 'category' property
   var shopItems = [
-      { name: 'Barry Skin', cost: 10, type: 'skin', imagePath: './assets/img/barry.gif', category: 'Skins', speed : 5 },
-      { name: 'Paper Dog Skin', cost: 30, type: 'skin', imagePath: './assets/img/paper-dog.gif', category: 'Skins', speed : 10 },
-      { name: 'Moonwalk Carlin Skin', cost: 50, type: 'skin', imagePath: './assets/img/carlin.gif', category: 'Skins', speed : 15 },
-      { name: 'Hover Animation', cost: 5, type: 'animation', className: 'hover-animation', category: 'Animations' },
-      { name: 'Coin Dropper', cost: 20, type: 'item', category: 'Items' },
-      { name: 'Strange Bark', cost: 10, type: 'sound', soundPath: './assets/mp3/bark-guez.mp3', category: 'Sounds' },
-      { name: 'Custom Scrollbar', cost: 5, type: 'scrollbar', imagePath: './assets/img/dog-scroll.png', category: 'Customizations' },
-      { name: 'Custom Scrollbar 2', cost: 5, type: 'scrollbar', imagePath: './assets/img/scroll2.png', category: 'Customizations' },
-      { name: 'Magic Cursor', cost: 5, type: 'cursor', cursorPath: 'url(./assets/img/cursorhead.png) 32 32, auto', category: 'Cursors' },
-      { name: 'Random Dog Word', cost: 5, type: 'function', functionName: 'generateRandomWordShopItem', category: 'Functions' },
+      {id: '1', name: 'Barry Skin', cost: 10, type: 'skin', imagePath: './assets/img/barry.gif', category: 'Skins', speed : 5 },
+      {id: '2', name: 'Paper Dog Skin', cost: 30, type: 'skin', imagePath: './assets/img/paper-dog.gif', category: 'Skins', speed : 10 },
+      {id: '3', name: 'Moonwalk Carlin Skin', cost: 50, type: 'skin', imagePath: './assets/img/carlin.gif', category: 'Skins', speed : 15 },
+      {id: '4', name: 'Hover Animation', cost: 5, type: 'animation', className: 'hover-animation', category: 'Animations' },
+      {id: '5', name: 'Coin Dropper', cost: 20, type: 'item', category: 'Items' },
+      {id: '6', name: 'Strange Bark', cost: 10, type: 'sound', soundPath: './assets/mp3/bark-guez.mp3', category: 'Sounds' },
+      {id: '7', name: 'Custom Scrollbar', cost: 5, type: 'scrollbar', imagePath: './assets/img/dog-scroll.png', category: 'Customizations' },
+      {id: '8', name: 'Custom Scrollbar 2', cost: 5, type: 'scrollbar', imagePath: './assets/img/scroll2.png', category: 'Customizations' },
+      {id: '9', name: 'Magic Cursor', cost: 5, type: 'cursor', cursorPath: 'url(./assets/img/cursorhead.png) 32 32, auto', category: 'Cursors' },
+      {id: '10', name: 'Random Dog Word', cost: 5, type: 'function', functionName: 'generateRandomWordShopItem', category: 'Functions' },
 
       // ... other items
   ];
+
+function isAdminPage() {
+return window.location.search.indexOf('admin') > -1;
+}
   
-  function addCursorStyle(cursorPath) {
-      // Create a new style element
-      const styleSheet = document.createElement("style");
-      styleSheet.type = "text/css";
-      // Set the innerText with the cursor path, ensuring the syntax is correct for CSS
-      styleSheet.innerText = `body { cursor: ${cursorPath}; }`;
-      // Append the style element to the head of the document
-      document.body.style.cursor = cursorPath;
-  }
-  
-  function changeCursor(cursorPath) {
-      // For macOS, ensure the image size is 32x32 pixels or less
-      // cursorPath should be a URL to the cursor image, ending with .cur or .png
-      document.body.style.cursor = cursorPath;
-  }
+function addCursorStyle(cursorPath) {
+    // Create a new style element
+    const styleSheet = document.createElement("style");
+    styleSheet.type = "text/css";
+    // Set the innerText with the cursor path, ensuring the syntax is correct for CSS
+    styleSheet.innerText = `body { cursor: ${cursorPath}; }`;
+    // Append the style element to the head of the document
+    document.body.style.cursor = cursorPath;
+}
+
+function changeCursor(cursorPath) {
+    // For macOS, ensure the image size is 32x32 pixels or less
+    // cursorPath should be a URL to the cursor image, ending with .cur or .png
+    document.body.style.cursor = cursorPath;
+}
 
   // Function to handle item purchase
 function handleItemPurchase(item) {
@@ -168,267 +172,286 @@ function handleItemPurchase(item) {
   }
 }
 
+// Function to change the scrollbar
+function changeScrollbar(imagePath) {
+    // Update the scrollbar thumb style
+    var styleSheet = document.createElement("style")
+    styleSheet.innerText = `
+        ::-webkit-scrollbar-thumb {
+            background: url('${imagePath}') no-repeat center center;
+            border-radius: 8px; /* Rounded corners on the scrollbar thumb */
+            background-size: contain; /* Cover will make sure the entire scrollbar is filled */
+            border: 4px solid transparent; /* Makes sure the image doesn't get cut off */
+            background-clip: padding-box; /* Makes sure the border transparent border is considered for the background */
+        }
+    `;
+    document.head.appendChild(styleSheet);
+}
 
-  
-
-
-  // Function to change the scrollbar
-  function changeScrollbar(imagePath) {
-      // Update the scrollbar thumb style
-      var styleSheet = document.createElement("style")
-      styleSheet.innerText = `
-          ::-webkit-scrollbar-thumb {
-              background: url('${imagePath}') no-repeat center center;
-              border-radius: 8px; /* Rounded corners on the scrollbar thumb */
-              background-size: contain; /* Cover will make sure the entire scrollbar is filled */
-              border: 4px solid transparent; /* Makes sure the image doesn't get cut off */
-              background-clip: padding-box; /* Makes sure the border transparent border is considered for the background */
-          }
-      `;
-      document.head.appendChild(styleSheet);
-  }
-
-  function changeCursor(cursorPath) {
-      // Set the cursor style for the body
-      document.body.style.cursor = cursorPath; // This will directly change the cursor
-  }
-
-  // Function to create a preview element
-  function createPreviewElement(item) {
-      // Remove existing preview if it exists
-      var existingPreview = document.getElementById('preview');
-      if (existingPreview) {
-          existingPreview.remove();
-      }
-
-      // Create a new preview container
-      var preview = document.createElement('div');
-      preview.id = 'preview';
-      preview.style.position = 'fixed';
-      preview.style.bottom = '60%';
-      preview.style.left = '400px';
-      preview.style.border = '1px solid black';
-      preview.style.padding = '10px';
-      preview.style.backgroundColor = 'white';
-
-      // Add the item image to the preview
-      if (item.imagePath) {
-          var image = document.createElement('img');
-          image.src = item.imagePath;
-          image.style.width = '100px'; // Set the size of the preview image
-          preview.appendChild(image);
-      }
-
-      // Optionally, add the item name or other details to the preview
-      var name = document.createElement('p');
-      name.innerText = item.name;
-      preview.appendChild(name);
-
-      document.body.appendChild(preview);
-  }
-
-  // Function to populate the shop with categorized groups
-  function populateShop(shopContainer, shopItems) {
-      const categories = {};
-
-      // Group items by category
-      shopItems.forEach(function(item) {
-          if (!categories[item.category]) {
-              categories[item.category] = [];
-          }
-          categories[item.category].push(item);
-      });
-
-      // Create sections for each category
-      Object.keys(categories).forEach(function(category) {
-          var categoryDiv = document.createElement('div');
-          categoryDiv.className = 'shop-category';
-          var categoryTitle = document.createElement('h3');
-          categoryTitle.innerText = category;
-          categoryDiv.appendChild(categoryTitle);
-
-           // For each item, add an event listener to show the preview
-          categories[category].forEach(function(item) {
-              var itemElement = document.createElement('div');
-              itemElement.className = 'shop-item';
-              itemElement.innerText = item.name + ' - ' + item.cost + ' Coins';
-
-              var buyButton = document.createElement('button');
-              buyButton.innerText = 'Buy';
-              buyButton.onclick = function() {
-                  handleItemPurchase(item);
-              };
-
-              // Event listener to show preview on mouseover
-              itemElement.onmouseover = function() {
-                  createPreviewElement(item);
-              };
-
-              // Optionally, hide preview on mouseout
-              itemElement.onmouseout = function() {
-                  var preview = document.getElementById('preview');
-                  if (preview) {
-                      preview.remove();
-                  }
-              };
-
-              itemElement.appendChild(buyButton);
-              categoryDiv.appendChild(itemElement);
-          });
-
-          shopContainer.appendChild(categoryDiv);
-      });
-  }
+function changeCursor(cursorPath) {
+    // Set the cursor style for the body
+    document.body.style.cursor = cursorPath; // This will directly change the cursor
+}
 
 
-  
+// Function to add a customization button to a shop item element
+function addCustomizationButton(itemElement, shopItem) {
+    var customizeButton = document.createElement('button');
+    customizeButton.innerText = 'Customize';
+    customizeButton.addEventListener('click', function() {
+        var fileInput = document.createElement('input');
+        fileInput.type = 'file';
+        fileInput.accept = 'image/*'; // Accept all image types
 
-  // Function to activate the Coin Dropper
-  function activateCoinDropper() {
-      setInterval(function() {
-          createDroppingCoin();
-      }, 5000); // Drop a coin every 5000 milliseconds (5 seconds)
-  }
+        fileInput.onchange = function(e) {
+            var file = e.target.files[0];
+            if (file) {
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                    // Update the image path in the shopItem and the DOM
+                    shopItem.imagePath = e.target.result;
+                };
+                reader.readAsDataURL(file);
+            }
+        };
 
-  // Function to create a dropping coin
-  function createDroppingCoin() {
-      var droppingCoin = document.createElement('img');
-      droppingCoin.className = 'dropping-coin';
-      droppingCoin.src = './assets/img/bone.gif'; // Replace with your coin image path
-      droppingCoin.style.position = 'absolute';
-      droppingCoin.style.left = Math.random() * (window.innerWidth - 20) + 'px';
-      droppingCoin.style.top = '0px';
-      document.body.appendChild(droppingCoin);
+        fileInput.click(); // Open the file input dialog
+    });
 
-      var dropInterval = setInterval(function() {
-          var topPosition = parseInt(droppingCoin.style.top);
-          topPosition += 5; // Adjust this value for drop speed
-          droppingCoin.style.top = topPosition + 'px';
+    itemElement.appendChild(customizeButton);
+}
 
-          if (topPosition > window.innerHeight) {
-              document.body.removeChild(droppingCoin);
-              clearInterval(dropInterval);
-          }
-      }, 50); // Adjust this value for drop animation speed
-  }
+// Function to create a preview element for the shop item
+function createPreviewElement(item) {
+    // Remove existing preview if it exists
+    var existingPreview = document.getElementById('preview');
+    if (existingPreview) {
+        existingPreview.remove();
+    }
 
-  // Shop Button Toggle Functionality
-  shopButton.onclick = function() {
-      shopContainer.style.display = shopContainer.style.display === 'none' ? 'block' : 'none';
-  };
+    // Create a new preview container
+    var preview = document.createElement('div');
+    preview.id = 'preview';
+    preview.style.position = 'fixed';
+    preview.style.bottom = '60%';
+    preview.style.left = '400px';
+    preview.style.border = '1px solid black';
+    preview.style.padding = '10px';
+    preview.style.backgroundColor = 'white';
 
-  function moveDog() {
-      if (!gameVisible) {
-          return; // Stop if game is not visible
-      }
+    // Add the item image to the preview
+    if (item.imagePath) {
+        var image = document.createElement('img');
+        image.src = item.imagePath;
+        image.style.width = '100px'; // Set the size of the preview image
+        preview.appendChild(image);
+    }
 
-      position += speed * direction;
-      dog.style.left = position + 'px';
+    // Optionally, add the item name or other details to the preview
+    var name = document.createElement('p');
+    name.innerText = item.name;
+    preview.appendChild(name);
 
-      checkCoinCollision();
+    document.body.appendChild(preview);
+}
 
-      if (position > window.innerWidth) {
-          position = -dog.offsetWidth;
-      } else if (position < -dog.offsetWidth) {
-          position = window.innerWidth;
-      }
+// Function to add a "Buy" button to a shop item element
+function addBuyButton(itemElement, shopItem) {
+    var buyButton = document.createElement('button');
+    buyButton.innerText = 'Buy';
+    buyButton.addEventListener('click', function() {
+        handleItemPurchase(shopItem);
+    });
+    itemElement.appendChild(buyButton);
+}
 
-      animationFrameId = requestAnimationFrame(moveDog);
-  }
+// Function to create and append shop items to the DOM
+function createAndAppendShopItems(shopContainer, shopItems) {
+    shopItems.forEach(function(item) {
+        // Create item element
+        var itemElement = document.createElement('div');
+        itemElement.className = 'shop-item';
+        itemElement.id = item.id;
+        itemElement.innerText = item.name + ' - ' + item.cost + ' Coins';
+        
+        // Append item to the shop container
+        shopContainer.appendChild(itemElement);
 
-  function startGame() {
-      dog.style.display = 'inline-block';
-      coinContainer.style.display = 'block';
-      moveDog();
-      coinCreationInterval = setInterval(createCoin, coinInterval);
-  }
+        // Add "Buy" button to the shop item
+        addBuyButton(itemElement, item);
 
-  function stopGame() {
-      dog.style.display = 'none';
-      coinContainer.style.display = 'none';
-      clearInterval(coinCreationInterval);
-      cancelAnimationFrame(animationFrameId);
-      coinSound.pause();
-      coinSound.currentTime = 0;
-  }
+        // If the item is a skin, add a customization button and preview functionality
+        if (item.type === 'skin') {
+            addCustomizationButton(itemElement, item);
+            itemElement.addEventListener('mouseover', function() {
+                createPreviewElement(item);
+            });
+            itemElement.addEventListener('mouseout', function() {
+                // Optionally, remove preview on mouseout
+                var existingPreview = document.getElementById('preview');
+                if (existingPreview) {
+                    existingPreview.remove();
+                }
+            });
+        }
+    });
+}
 
-  var gameVisible = true; // Initial state
-  toggleButton.onclick = function() {
-      gameVisible = !gameVisible;
-      if (gameVisible) {
-          startGame();
-      } else {
-          stopGame();
-      }
-  };
+// Function to populate the shop with categorized groups
+function populateShop(shopContainer, shopItemsArray) {
+    // Clear the container before populating
+    shopContainer.innerHTML = '';
+    createAndAppendShopItems(shopContainer, shopItemsArray);
+}
 
-  // Function to create a new coin
-  function createCoin() {
-      var coin = document.createElement('img');
-      coin.className = 'coin';
-      coin.src = './assets/img/bone.gif'; // Replace with your coin image path
-      coin.style.left = Math.random() * (window.innerWidth - 20) + 'px';
-      coinContainer.appendChild(coin);
-  }
+// Function to activate the Coin Dropper
+function activateCoinDropper() {
+    setInterval(function() {
+        createDroppingCoin();
+    }, 5000); // Drop a coin every 5000 milliseconds (5 seconds)
+}
 
-  function checkCoinCollision() {
-      var coins = document.querySelectorAll('.coin');
-      coins.forEach(function(coin) {
-          if (isColliding(dog, coin)) {
-              // Ensure the coin is in the coinContainer before attempting to remove it
-              if (coinContainer.contains(coin)) {
-                  coinContainer.removeChild(coin);
-              } else {
-                  // If the coin is not in the container, remove it directly from the body
-                  document.body.removeChild(coin);
-              }
-              coinSound.play();
-              coinCount++;
-              updateCoinCounterDisplay(coinCount); // Update the display with a new function
-          }
-      });
-  }
-  
-  // Function to update the coin counter display with a GIF
-  function updateCoinCounterDisplay(count) {
-      // Clear the current contents of the coin counter display
-      coinCounterDisplay.innerHTML = '';
-    
-      // Create an image element for the coin GIF
-      var coinImage = document.createElement('img');
-      coinImage.src = './assets/img/bone.gif'; // Replace with the path to your coin GIF
-      coinImage.style.width = '30px'; // Set this to the desired size of your coin GIF
-      coinImage.style.height = 'auto';
-      coinImage.style.verticalAlign = 'middle'; // Align the image with the text
-    
-      // Append the coin GIF to the coin counter display
-      coinCounterDisplay.appendChild(coinImage);
-    
-      // Create a text node for the coin count and append it
-      var coinCountText = document.createTextNode(' ' + count);
-      coinCounterDisplay.appendChild(coinCountText);
-  }
-  
+// Function to create a dropping coin
+function createDroppingCoin() {
+    var droppingCoin = document.createElement('img');
+    droppingCoin.className = 'dropping-coin';
+    droppingCoin.src = './assets/img/bone.gif'; // Replace with your coin image path
+    droppingCoin.style.position = 'absolute';
+    droppingCoin.style.left = Math.random() * (window.innerWidth - 20) + 'px';
+    droppingCoin.style.top = '0px';
+    document.body.appendChild(droppingCoin);
 
-  // Function to change dog's skin and speed
-  function changeDogSkin(skin) {
-    dog.src = skin.imagePath;
-    speed = skin.speed; // Update the speed global variable
-  }
+    var dropInterval = setInterval(function() {
+        var topPosition = parseInt(droppingCoin.style.top);
+        topPosition += 5; // Adjust this value for drop speed
+        droppingCoin.style.top = topPosition + 'px';
 
-  // Function to Apply Animation to Links
-  function applyAnimationToLinks(className) {
-      document.querySelectorAll('a:not(header a):not(footer a)').forEach(function(link) {
-          link.classList.add(className);
-      });
-  }
+        if (topPosition > window.innerHeight) {
+            document.body.removeChild(droppingCoin);
+            clearInterval(dropInterval);
+        }
+    }, 50); // Adjust this value for drop animation speed
+}
 
-  // Function to activate the Coin Dropper
-  function activateCoinDropper() {
-      setInterval(function() {
-          createDroppingCoin();
-      }, 3000); // Drop a coin every 5000 milliseconds (5 seconds)
-  }
+// Shop Button Toggle Functionality
+shopButton.onclick = function() {
+    shopContainer.style.display = shopContainer.style.display === 'none' ? 'block' : 'none';
+};
+
+function moveDog() {
+    if (!gameVisible) {
+        return; // Stop if game is not visible
+    }
+
+    position += speed * direction;
+    dog.style.left = position + 'px';
+
+    checkCoinCollision();
+
+    if (position > window.innerWidth) {
+        position = -dog.offsetWidth;
+    } else if (position < -dog.offsetWidth) {
+        position = window.innerWidth;
+    }
+
+    animationFrameId = requestAnimationFrame(moveDog);
+}
+
+function startGame() {
+    dog.style.display = 'inline-block';
+    coinContainer.style.display = 'block';
+    moveDog();
+    coinCreationInterval = setInterval(createCoin, coinInterval);
+}
+
+function stopGame() {
+    dog.style.display = 'none';
+    coinContainer.style.display = 'none';
+    clearInterval(coinCreationInterval);
+    cancelAnimationFrame(animationFrameId);
+    coinSound.pause();
+    coinSound.currentTime = 0;
+}
+
+var gameVisible = true; // Initial state
+toggleButton.onclick = function() {
+    gameVisible = !gameVisible;
+    if (gameVisible) {
+        startGame();
+    } else {
+        stopGame();
+    }
+};
+
+// Function to create a new coin
+function createCoin() {
+    var coin = document.createElement('img');
+    coin.className = 'coin';
+    coin.src = './assets/img/bone.gif'; // Replace with your coin image path
+    coin.style.left = Math.random() * (window.innerWidth - 20) + 'px';
+    coinContainer.appendChild(coin);
+}
+
+function checkCoinCollision() {
+    var coins = document.querySelectorAll('.coin');
+    coins.forEach(function(coin) {
+        if (isColliding(dog, coin)) {
+            // Ensure the coin is in the coinContainer before attempting to remove it
+            if (coinContainer.contains(coin)) {
+                coinContainer.removeChild(coin);
+            } else {
+                // If the coin is not in the container, remove it directly from the body
+                document.body.removeChild(coin);
+            }
+            coinSound.play();
+            coinCount++;
+            updateCoinCounterDisplay(coinCount); // Update the display with a new function
+        }
+    });
+}
+
+// Function to update the coin counter display with a GIF
+function updateCoinCounterDisplay(count) {
+    // Clear the current contents of the coin counter display
+    coinCounterDisplay.innerHTML = '';
+
+    // Create an image element for the coin GIF
+    var coinImage = document.createElement('img');
+    coinImage.src = './assets/img/bone.gif'; // Replace with the path to your coin GIF
+    coinImage.style.width = '30px'; // Set this to the desired size of your coin GIF
+    coinImage.style.height = 'auto';
+    coinImage.style.verticalAlign = 'middle'; // Align the image with the text
+
+    // Append the coin GIF to the coin counter display
+    coinCounterDisplay.appendChild(coinImage);
+
+    // Create a text node for the coin count and append it
+    var coinCountText = document.createTextNode(' ' + count);
+    coinCounterDisplay.appendChild(coinCountText);
+}
+
+
+// Function to change dog's skin and speed
+function changeDogSkin(skin) {
+dog.src = skin.imagePath;
+speed = skin.speed; // Update the speed global variable
+}
+
+
+
+// Function to Apply Animation to Links
+function applyAnimationToLinks(className) {
+    document.querySelectorAll('a:not(header a):not(footer a)').forEach(function(link) {
+        link.classList.add(className);
+    });
+}
+
+// Function to activate the Coin Dropper
+function activateCoinDropper() {
+    setInterval(function() {
+        createDroppingCoin();
+    }, 3000); // Drop a coin every 5000 milliseconds (5 seconds)
+}
 
   // Function to create a dropping coin
 function createDroppingCoin() {
@@ -458,35 +481,41 @@ function createDroppingCoin() {
 
 
 
-  // Shop Button Toggle Functionality
-  shopButton.onclick = function() {
-      shopContainer.style.display = shopContainer.style.display === 'none' ? 'block' : 'none';
-  };
-  // Collision detection function
-  function isColliding(a, b) {
-      var aRect = a.getBoundingClientRect();
-      var bRect = b.getBoundingClientRect();
-      return !(
-          aRect.top > bRect.bottom ||
-          aRect.bottom < bRect.top ||
-          aRect.right < bRect.left ||
-          aRect.left > bRect.right
-      );
-  }
+// Shop Button Toggle Functionality
+shopButton.onclick = function() {
+    shopContainer.style.display = shopContainer.style.display === 'none' ? 'block' : 'none';
+};
+// Collision detection function
+function isColliding(a, b) {
+    var aRect = a.getBoundingClientRect();
+    var bRect = b.getBoundingClientRect();
+    return !(
+        aRect.top > bRect.bottom ||
+        aRect.bottom < bRect.top ||
+        aRect.right < bRect.left ||
+        aRect.left > bRect.right
+    );
+}
 
-  // Event listener for arrow key presses to change direction
-  document.addEventListener('keydown', function(e) {
-      if (e.key === 'ArrowRight') {
-          direction = 1;
-          dog.style.transform = 'scaleX(1)';
-      } else if (e.key === 'ArrowLeft') {
-          direction = -1;
-          dog.style.transform = 'scaleX(-1)';
-      }
-  });
-  // Populate the shop once you've defined your items and categories
-  populateShop(shopContainer, shopItems);
+// Event listener for arrow key presses to change direction
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'ArrowRight') {
+        direction = 1;
+        dog.style.transform = 'scaleX(1)';
+    } else if (e.key === 'ArrowLeft') {
+        direction = -1;
+        dog.style.transform = 'scaleX(-1)';
+    }
+});
 
-  // Start the game initially
-  startGame();
+// Populate the shop once you've defined your items and categories
+var shopContainer = document.getElementById('shopContainer');
+if (shopContainer) {
+    populateShop(shopContainer, shopItems);
+} else {
+    console.error("The shop container element was not found in the DOM.");
+}
+
+// Start the game initially
+startGame();
 });
